@@ -15,7 +15,7 @@ const GitHubRepositories = () => {
       try {
         const response = await axios.get(`https://api.github.com/users/Lemmy731/repos?page=${page}&per_page=${perPage}`, {
           headers: {
-            Authorization: process.env.pat,
+            Authorization: 'access-token',
           },
         });
         console.log(response);
