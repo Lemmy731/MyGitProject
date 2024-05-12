@@ -8,14 +8,14 @@ const GitHubRepositories = () => {
   const [languageFilter, setLanguageFilter] = useState('');
   const [startingLetterFilter, setStartingLetterFilter] = useState('');
   const [page, setPage] = useState(1);
-  const perPage = 10; // Number of repositories per page
+  const perPage = 10; 
 
   useEffect(() => {
     const fetchRepositories = async () => {
       try {
         const response = await axios.get(`https://api.github.com/users/Lemmy731/repos?page=${page}&per_page=${perPage}`, {
           headers: {
-            Authorization: `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`,
+            Authorization: process.env.pat,
           },
         });
         console.log(response);
@@ -25,13 +25,10 @@ const GitHubRepositories = () => {
         if (searchQuery) {
           filteredRepositories = filteredRepositories.filter(repo => repo.name.toLowerCase().includes(searchQuery.toLowerCase()));
         }
-
-        // Apply language filter
         if (languageFilter) {
           filteredRepositories = filteredRepositories.filter(repo => repo.language === languageFilter);
         }
 
-        // Apply starting letter filter
         if (startingLetterFilter) {
           filteredRepositories = filteredRepositories.filter(repo => repo.name.toLowerCase().startsWith(startingLetterFilter.toLowerCase()));
         }
@@ -70,13 +67,12 @@ const GitHubRepositories = () => {
           <option value="">All Languages</option>
           <option value="JavaScript">JavaScript</option>
           <option value="Python">Python</option>
-          {/* Add more options as needed */}
         </select>
         <select value={startingLetterFilter} onChange={handleStartingLetterFilterChange}>
           <option value="">All Letters</option>
           <option value="a">A</option>
           <option value="b">B</option>
-          {/* Add more options for other letters */}
+  
         </select>
       </div>
       <ul>
